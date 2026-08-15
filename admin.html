@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>License Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- SAME LOADING VIDEO -->
+  <div id="loading-screen">
+    <video
+      id="loading-video"
+      autoplay
+      muted
+      playsinline
+      preload="auto"
+    >
+      <source src="./loadingscreen.mp4" type="video/mp4">
+      Your browser does not support MP4 video.
+    </video>
+  </div>
+
+  <main class="page">
+    <section class="card">
+      <h1>License Generator</h1>
+
+      <input
+        id="password"
+        type="password"
+        placeholder="Admin password"
+      >
+
+      <input
+        id="count"
+        type="number"
+        min="1"
+        max="100"
+        value="5"
+        placeholder="Number of keys"
+      >
+
+      <input
+        id="days"
+        type="number"
+        min="1"
+        max="3650"
+        value="30"
+        placeholder="Days valid"
+      >
+
+      <input
+        id="max"
+        type="number"
+        min="1"
+        max="100"
+        value="1"
+        placeholder="Max activations"
+      >
+
+      <button id="generate">
+        Generate Keys
+      </button>
+
+      <pre id="output"></pre>
+
+      <hr>
+
+      <input
+        id="revokeKey"
+        placeholder="Key to revoke"
+      >
+
+      <button id="revoke">
+        Revoke Key
+      </button>
+
+      <p id="result"></p>
+    </section>
+  </main>
+
+  <script>
+    const API_URL = "https://YOUR-BACKEND.example.com";
+
+    const loadingScreen =
+      document.getElementById("loading-screen");
+
+    const loadingVideo =
+      document.getElementById("loading-video");
+
+    function hideLoadingScreen() {
+      loadingScreen.classList.add("hidden");
+
+      setTimeout(() => {
+        loadingScreen.remove();
+      }, 600);
+    }
+
+    loadingVideo.addEventListener(
+      "ended",
+      hideLoadingScreen
+    );
+
+    loadingVideo.addEventListener(
+      "error",
+      hideLoadingScreen
+    );
+
+    setTimeout(() => {
+      if (document.getElementById("loading-screen")) {
+        hideLoadingScreen();
+      }
+    }, 15000);
+
+    function adminHeaders() {
+      return {
+        "Content-Type": "application/json",
+        "x-admin-password":
+          document.getElementById("password").value
+      };
+    }
+
+    document
+      .getElementById("generate")
+      .addEventListener("click", async () => {
+
+        const output =
+          document.getElementById("output");
+
+        output.textContent = "Generating...";
+
+        try {
+          const response = await fetch(
+            API_URL + "/api/admin/generate",
+            {
+              method: "POST",
+              headers: adminHeaders(),
+              body: JSON.stringify({
+                count:
+                  Number(
+                    document.getElementById("count").value
+                  ),
+                days:
+                  Number(
+                    document.getElementById("days").value
+                  ),
+                maxActivations:
+                  Number(
+                    document.getElementById("max").value
+                  )
+              })
+            }
+          );
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            output.textContent =
+              data.error || "Generation failed.";
+            return;
+          }
+
+          output.textContent =
+            data.keys
+              .map(
+                item =>
+                  `${item.key} | expires ${item.expiresAt}`
+              )
+              .join("\n");
+
+        } catch {
+          output.textContent =
+            "Could not connect to the server.";
+        }
+      });
+
+    document
+      .getElementById("revoke")
+      .addEventListener("click", async () => {
+
+        const result =
+          document.getElementById("result");
+
+        try {
+          const response = await fetch(
+            API_URL + "/api/admin/revoke",
+            {
+              method: "POST",
+              headers: adminHeaders(),
+              body: JSON.stringify({
+                key:
+                  document
+                    .getElementById("revokeKey")
+                    .value
+              })
+            }
+          );
+
+          const data = await response.json();
+
+          result.textContent =
+            response.ok
+              ? "✓ Key revoked."
+              : (data.error || "Revoke failed.");
+
+        } catch {
+          result.textContent =
+            "Could not connect to the server.";
+        }
+      });
+  </script>
+
+</body>
+</html>
