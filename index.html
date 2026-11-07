@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I'm Sorry</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:#000;color:#fff;min-height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;position:relative}
+.heart-bg{position:absolute;color:rgba(255,255,255,0.05);font-size:20px;animation:float 10s linear infinite;z-index:0;pointer-events:none}
+@keyframes float{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100px) rotate(360deg);opacity:0}}
+.container{position:relative;z-index:10;background:#111;border:1px solid #333;padding:40px 30px;border-radius:20px;box-shadow:0 10px 30px rgba(255,255,255,0.05);text-align:center;max-width:400px;width:90%}
+.screen{display:none;flex-direction:column;align-items:center;animation:fadeIn 0.5s ease;width:100%}
+.screen.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2{font-size:1.3rem;margin-bottom:25px;line-height:1.5;color:#fff;font-weight:600}
+.buttons{display:flex;gap:15px;justify-content:center;align-items:center;flex-wrap:wrap;min-height:60px}
+button{border:1px solid #fff;border-radius:10px;cursor:pointer;font-weight:700;transition:all 0.3s ease;padding:14px 30px;font-size:1rem;outline:none}
+.btn-yes{background:#fff;color:#000;z-index:20}
+.btn-no{background:#000;color:#fff;z-index:10}
+.btn-yes:active,.btn-no:active{transform:scale(0.95)}
+.btn-next{background:#000;color:#fff;margin-top:20px;padding:14px 40px;font-size:1rem;border:1px solid #fff}
+.btn-next:active{background:#fff;color:#000}
+
+/* FROZEN SCROLL HINT */
+.scroll-hint{
+font-size:0.7rem;
+color:#888;
+margin-bottom:15px;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px;
+font-weight:600;
+letter-spacing:1px;
+text-transform:uppercase;
+}
+.scroll-hint span{font-size:14px;line-height:1}
+
+/* MESSAGE BOX */
+.message-box{
+text-align:left;
+margin-bottom:20px;
+font-size:0.95rem;
+line-height:1.7;
+color:#ddd;
+max-height:45vh;
+overflow-y:auto;
+padding-right:10px;
+scrollbar-width:none;
+-ms-overflow-style:none;
+border-top:1px solid #222;
+border-bottom:1px solid #222;
+padding-top:15px;
+padding-bottom:15px;
+}
+.message-box::-webkit-scrollbar{display:none}
+.message-box p{margin-bottom:15px}
+.message-box strong{color:#fff;font-weight:700;border-bottom:1px solid #555}
+
+/* FINAL H5 TEXT STYLING */
+.message-box h5{
+font-size:0.85rem;
+color:#999;
+font-weight:400;
+line-height:1.5;
+margin-top:25px;
+margin-bottom:10px;
+padding-top:15px;
+border-top:1px dashed #444;
+font-style:italic;
+}
+
+.signature{font-size:0.8rem;color:#888;margin-top:20px;font-family:monospace;letter-spacing:1px;border-top:1px solid #333;padding-top:15px;text-align:center}
+.logo{width:100px;height:100px;border-radius:50%;object-fit:cover;margin-bottom:20px;border:2px solid #333;display:none;filter:grayscale(100%)}
+.apology-gif{width:180px;height:180px;object-fit:contain;margin:0 auto 20px auto;display:block;filter:grayscale(100%)}
+</style>
+</head>
+<body>
+
+<div id="bg"></div>
+
+<div class="container">
+    
+    <div class="screen active" id="screen1">
+        <img src="logo.png" class="logo" style="display:block" onerror="this.style.display='none'">
+        <h2>Do you want to read my apology message?</h2>
+        <div class="buttons">
+            <button class="btn-yes" id="btnYes">Yes</button>
+            <button class="btn-no" id="btnNo">No</button>
+        </div>
+    </div>
+
+    <div class="screen" id="screen2">
+        <div class="scroll-hint">
+            <span>↓</span>
+            Scroll down to read
+        </div>
+        <div class="message-box">
+            <img src="https://media.tenor.com/7hV_XiuhC2gAAAAi/headpat-comforting.gif" class="apology-gif" alt="headpat">
+            
+            <p>Dear Zaira,</p>
+            
+            <p>I know I messed up. I didn't even think about how much it would hurt you about my actions when I deleted our chats. I let my emotions, my exhaustion, and my family problems get the best of me. I shouldn't have dragged you into the chaos of my own mind.</p>
+
+            <p>You were there for me when I was constantly putting myself down. You helped me see things differently, and honestly, <strong>you're the first girl I've ever met that I truly liked this much.</strong> I thought I was just going to focus on my problems, but when you came along, everything changed. You made me feel something real.</p>
+
+            <p>I regret the times I wasn't strong enough for you. I realize now how much my actions and overthinking drained you. I was so caught up in my own struggles that I failed to see I was already exhausting you. I'm sorry you had to carry that weight.</p>
+
+            <p>You were always the one talking to me and keeping the conversation alive. I respect you for that. But I just need you to know that <strong>I don't take the days I spent talking to you for granted.</strong> You matter to me, even though I was broken that day. 🤦🏻‍♂️</p>
+
+            <p>If you need space, I'll give it to you. But if you ever come back, I'll be here. I won't sulk anymore. I won't overthink. I'm sorry, Zaira.</p>
+            
+            <p>I will change myself now. I will keep improving myself, just like you said. I need to improve myself.</p>
+
+            <p>I will wait as always.</p>
+            
+            <p>- Jhon</p>
+            
+            <h5>I don't know if this will be worth it to you, but it's fine if you don't care about it. It's fine for me. I know I tried my best to apologize -_-</h5>
+            
+            <div class="signature">thanks for reading</div>
+        </div>
+        <button class="btn-next" id="btnUnderstand">Done Reading</button>
+    </div>
+
+</div>
+
+<script>
+const bg = document.getElementById('bg');
+for(let i=0; i<15; i++){
+    let h = document.createElement('div');
+    h.className = 'heart-bg';
+    h.innerHTML = '🤍';
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.animationDuration = (Math.random() * 5 + 5) + 's';
+    h.style.animationDelay = Math.random() * 5 + 's';
+    bg.appendChild(h);
+}
+
+const btnNo = document.getElementById('btnNo');
+const btnYes = document.getElementById('btnYes');
+const btnUnderstand = document.getElementById('btnUnderstand');
+
+let noCount = 0;
+const noMessages = [
+    "No",
+    "Pls pls click it...",
+    "Come on, please 🥺",
+    "If you don't want it's fine...",
+    "But please click it 🥺",
+    "Just to let you know...",
+    "I'm sorry, please?",
+    "Just one click...",
+    "I'm begging you 🥺",
+    "Please click Yes...",
+];
+
+btnNo.addEventListener('click', function(e) {
+    e.preventDefault();
+    btnNo.innerText = noMessages[noCount % noMessages.length];
+    noCount++;
+    let currentSize = parseFloat(window.getComputedStyle(btnYes).fontSize);
+    let currentPad = parseFloat(window.getComputedStyle(btnYes).paddingTop);
+    btnYes.style.fontSize = (currentSize * 1.4) + 'px';
+    btnYes.style.padding = (currentPad * 1.4) + 'px ' + (currentPad * 2) + 'px';
+    if(noCount > 3) {
+        btnNo.style.fontSize = '0.7rem';
+        btnNo.style.padding = '10px 15px';
+    }
+});
+
+btnYes.addEventListener('click', function() {
+    document.getElementById('screen1').classList.remove('active');
+    document.getElementById('screen2').classList.add('active');
+});
+
+btnUnderstand.addEventListener('click', function() {
+    window.location.href = "https://www.tiktok.com/@jd1214dec12_?_r=1&_t=ZS-9BD0uo3OpXD";
+});
+</script>
+</body>
+</html>
